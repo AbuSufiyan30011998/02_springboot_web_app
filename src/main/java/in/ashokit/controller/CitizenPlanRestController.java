@@ -20,6 +20,7 @@ import in.ashokit.service.CitizenPlanService;
 @RequestMapping("/citizen")
 public class CitizenPlanRestController {
 
+    private final String geneder = "geneder";
     @Autowired
     private CitizenPlanService citizenPlanService;
 
@@ -39,7 +40,7 @@ public class CitizenPlanRestController {
     public List<CitizenPlan> searchCitizens(
             @RequestParam(name = "planName", required = false) String planName,
             @RequestParam(name = "planStatus", required = false) String planStatus,
-            @RequestParam(name = "geneder", required = false) String gender,
+            @RequestParam(name = geneder, required = false) String gender,
             @RequestParam(name = "startPlanDate", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startPlanDate,
 

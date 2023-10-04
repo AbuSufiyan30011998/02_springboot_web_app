@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -14,15 +14,135 @@
 
 <title>citizen_report</title>
 </head>
+
+<style>
+td {
+	padding-left: 10px;
+}
+</style>
 <body>
 
 
-	<div class="container my-3">
-		<h2 class="text-success">Citizen Plan Report</h2>
-		<hr>
-		<div>
-			
+	<div class="container my-5">
+
+		<div class="card ">
+
+
+			<div class="card-header">
+				<h4>citizen plan report</h4>
+			</div>
+
+
+			<div class="card-body">
+				<form th:action="@{/filter-data}" th:object="${search}"
+					method="post">
+
+					<table>
+						<tr>
+							<td><select class="form-control" th:field="*{planName}">
+									<option value="">-plan name-</option>
+									<option th:each="name:${plans} " th:value="${name}"
+										th:text="${name}" />
+							</select></td>
+
+
+							<td><select class="form-control" th:field="*{planStatus}">
+									<option value="">-plan status-</option>
+									<option th:each="status : ${status} " th:value="${status}"
+										th:text="${status}" />
+							</select></td>
+
+							<td><select class="form-control" th:field="*{geneder}">
+									<option value="">-gender-</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+							</select></td>
+
+							<td><input type="date" class="form-control"
+								th:field="*{startPlanDate}" /></td>
+
+							<td><input type="date" class="form-control"
+								th:field="*{endPlanDate}" /></td>
+
+
+							<td>
+								<button type="submit" class="btn btn-primary">Search</button>
+							</td>
+
+						</tr>
+
+					</table>
+				</form>
+			</div>
+
+
 		</div>
+
 	</div>
+	<div class="container mt-5 ">
+		<div class="card">
+			<div class="card-header ">
+
+				<h5>list of citizens</h5>
+				<p th:text="${msg}" class="text-success fw-normal"></p>
+			</div>
+
+			<div class="card-body ">
+
+
+				<table class="table   table-bordered  text-center ">
+					<thead class="table-secondary">
+						<tr >
+
+							<th scope="col">Name</th>
+							<th scope="col">Plan Name</th>
+							<th scope="col">Plan Status</th>
+							<th scope="col">Email</th>
+							<th scope="col">Mobile</th>
+							<th scope="col">Gender</th>
+							<th scope="col">SSN</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="citizen:${citizens}">
+
+							<td th:text="${citizen.name}" />
+							<td th:text="${citizen.planName}" />
+							<td th:text="${citizen.planStatus}" />
+							<td th:text="${citizen.email}" />
+							<td th:text="${citizen.phnNo}" />
+							<td th:text="${citizen.geneder}" />
+							<td th:text="${citizen.ssn}" />
+
+
+						</tr>
+
+
+						<div th:if="${citizens==null or citizens.isEmpty()}">
+							</tr>
+							<td colspan="6" class="text-danger "><h4>No Data
+									Available</h4></td>
+							<tr>
+						</div>
+
+					</tbody>
+
+				</table>
+
+			</div>
+
+		</div>
+
+
+	</div>
+	<!--end container  -->
+
+<div class="container my-3 text-center">
+<a  th:href="@{/excel}" class="btn btn-primary">Excel</a>
+<a  th:href="@{/pdf}" class="btn btn-danger">Pdf</a>
+
+</div>
+
 </body>
 </html>
